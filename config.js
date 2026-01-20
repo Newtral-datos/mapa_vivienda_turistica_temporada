@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
+  // Registrar el protocolo PMTiles
   let protocol = new pmtiles.Protocol();
   maplibregl.addProtocol("pmtiles", protocol.tile);
 
   const CONFIG = {
-    pmtilesFile: 'mapa_rua.pmtiles', 
+    pmtilesFile: 'mapa_rua.pmtiles',
     sourceLayer: 'mapa_rua',        
     center: [-3.7038, 40.4168],
     zoom: 5,
@@ -58,9 +59,10 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   map.on('load', function() {
+    // ✅ CARGA DEL PMTILES - Igual que en el proyecto que funciona
     map.addSource('datos', {
       type: 'vector',
-      url: `pmtiles://${CONFIG.pmtilesFile}`
+      url: 'pmtiles://mapa_rua.pmtiles'  // ← CAMBIO AQUÍ
     });
 
     const typeFilter = document.getElementById("alquilerTypeFilter");
