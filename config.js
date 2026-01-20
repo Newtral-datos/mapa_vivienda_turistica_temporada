@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const CONFIG = {
     pmtilesFile: 'mapa_rua.pmtiles',
-    sourceLayer: 'mapa_rua',        
+    sourceLayer: 'mapa_rua_2',        
     center: [-3.7038, 40.4168],
     zoom: 5,
     flyToZoom: 11,
