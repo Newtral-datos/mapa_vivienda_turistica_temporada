@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Alquiler Turístico y Temporada</title>
+
+  <script src="https://unpkg.com/maplibre-gl@4.1.2/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@4.1.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/pmtiles@3.0.7/dist/pmtiles.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.5.0/dist/maplibre-gl-geocoder.min.js"></script>
+  <link href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.5.0/dist/maplibre-gl-geocoder.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+
+  <style>
+    :root {
+      --accent: #01f3b3;
+      --accent-dark: #00b38a;
+      --border-soft: rgba(0, 0, 0, 0.08);
+      --radius-md: 10px;
+      --font-main: system-ui, -apple-system, sans-serif;
+    }
+
+    body { margin: 0; padding: 0; font-family: var(--font-main); overflow-x: hidden; }
+    #map { width: 100%; height: 100vh; }
+
+    .controls-container {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .controls-container > * { pointer-events: auto; }
+
+    .type-filter-container {
+      background: white;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 6px 18px;
+      display: flex;
+      flex-direction: column;
+    }
+    .type-filter-container label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: #777; margin-bottom: -2px; }
+    .type-filter-container select { border: none; outline: none; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; padding-right: 10px; }
+
+    #geocoder-container { min-width: 280px; }
+    .maplibregl-ctrl-geocoder { 
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important; 
+      border-radius: 999px !important; 
+      border: 1px solid var(--border-soft) !important;
+      width: 100% !important;
+    }
+
+    .random-btn-wrapper {
+      position: absolute;
+      bottom: 30px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .random-btn {
+      border: none; padding: 12px 24px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #fff; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 16px rgba(1, 243, 179, 0.3);
+      display: flex; align-items: center; gap: 8px;
+      transition: transform 0.2s;
+    }
+    .random-btn:hover { transform: scale(1.05); }
+    .random-btn::before { content: "🎲"; }
+
+    .popup-container { padding: 5px; min-width: 180px; }
+    .popup-header { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; }
+    .popup-valor-destacado { 
+      background: #000; 
+      color: #fff; 
+      padding: 10px; 
+      border-radius: 8px; 
+      font-weight: 700; 
+      text-align: center;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="controls-container">
+    <div class="type-filter-container">
+      <label>Mostrar viviendas</label>
+      <select id="alquilerTypeFilter">
+        <option value="turisticas">Turísticas</option>
+        <option value="temporada">De Temporada</option>
+      </select>
+    </div>
+    <div id="geocoder-container"></div>
+  </div>
+  <div class="random-btn-wrapper">
+    <button id="randomLocation" class="random-btn">Municipio al azar</button>
+  </div>
+  <script src="config.js"></script>
+</body>
+</html>
