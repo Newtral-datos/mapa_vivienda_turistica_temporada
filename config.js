@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const CONFIG = {
     pmtilesFile: 'mapa_rua.pmtiles',
-    sourceLayer: 'mapa_rua_2',  // ← CORREGIDO
+    sourceLayer: 'mapa_rua',
     center: [-3.7038, 40.4168],
     zoom: 5,
     flyToZoom: 11,
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
       id: POLYGON_LAYER_ID,
       type: 'fill',
       source: 'mapa_rua',
-      'source-layer': CONFIG.sourceLayer,  // Usa mapa_rua_2
+      'source-layer': CONFIG.sourceLayer,
       paint: {
         'fill-color': getFillColor(typeFilter.value),
         'fill-opacity': 0.75,
