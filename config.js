@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
   maplibregl.addProtocol("pmtiles", protocol.tile);
 
   const CONFIG = {
-    pmtilesFile: './mapa_rua.pmtiles', 
+    pmtilesFile: 'https://newtral-datos.github.io/mapa_vivienda_turistica_temporada/mapa_rua.pmtiles', 
     sourceLayer: 'mapa_rua',        
     center: [-3.7038, 40.4168],
     zoom: 5,
