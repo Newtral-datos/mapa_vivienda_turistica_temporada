@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   map.on('load', function() {
     // ✅ CARGA DEL PMTILES - Igual que en el proyecto que funciona
-    map.addSource('datos', {
+    map.addSource('mapa_rua', {
       type: 'vector',
       url: 'pmtiles://mapa_rua.pmtiles'  // ← CAMBIO AQUÍ
     });
