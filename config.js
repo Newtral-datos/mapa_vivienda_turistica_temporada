@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
     map.addLayer({
       id: POLYGON_LAYER_ID,
       type: 'fill',
-      source: 'datos',
+      source: 'mapa_rua',
       'source-layer': CONFIG.sourceLayer,
       paint: {
         'fill-color': getFillColor(typeFilter.value),
