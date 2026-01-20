@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const CONFIG = {
     pmtilesFile: 'mapa_rua.pmtiles',
-    sourceLayer: 'mapa_rua_2',        
+    sourceLayer: 'mapa_rua_2',  // ← CORREGIDO
     center: [-3.7038, 40.4168],
     zoom: 5,
     flyToZoom: 11,
@@ -59,10 +59,10 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   map.on('load', function() {
-    // ✅ CARGA DEL PMTILES - Igual que en el proyecto que funciona
+    // Cargar PMTiles
     map.addSource('mapa_rua', {
       type: 'vector',
-      url: 'pmtiles://mapa_rua.pmtiles'  // ← CAMBIO AQUÍ
+      url: 'pmtiles://mapa_rua.pmtiles'
     });
 
     const typeFilter = document.getElementById("alquilerTypeFilter");
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
       id: POLYGON_LAYER_ID,
       type: 'fill',
       source: 'mapa_rua',
-      'source-layer': CONFIG.sourceLayer,
+      'source-layer': CONFIG.sourceLayer,  // Usa mapa_rua_2
       paint: {
         'fill-color': getFillColor(typeFilter.value),
         'fill-opacity': 0.75,
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (popup.isOpen()) popup.remove();
     });
 
-    // Evento de clic para el Popup con validación de números
+    // Evento de clic para el Popup
     map.on('click', POLYGON_LAYER_ID, (e) => {
       const p = e.features[0].properties;
       const activo = typeFilter.value; 
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
     map.on('mouseenter', POLYGON_LAYER_ID, () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', POLYGON_LAYER_ID, () => { map.getCanvas().style.cursor = ''; });
 
-    // Botón Aleatorio con validación de números
+    // Botón Aleatorio
     document.getElementById('randomLocation').addEventListener('click', () => {
       const features = map.queryRenderedFeatures({ layers: [POLYGON_LAYER_ID] });
       
@@ -145,7 +145,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(config.query)}&format=geojson&countrycodes=es&limit=5`);
         const json = await response.json();
         return { features: json.features.map(f => ({
-          type: 'Feature', geometry: f.geometry, place_name: f.properties.display_name, center: f.geometry.coordinates
+          type: 'Feature', 
+          geometry: f.geometry, 
+          place_name: f.properties.display_name, 
+          center: f.geometry.coordinates
         }))};
       }
     }, { maplibregl, placeholder: "Buscar municipio...", marker: false });
